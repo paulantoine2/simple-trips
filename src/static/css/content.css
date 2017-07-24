@@ -1,0 +1,265 @@
+aside > .menu,
+aside > .top{
+  border-top: none;
+}
+aside > *:not(.map){
+  padding: 20px 0;
+}
+aside p{
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+aside .message{
+  text-align: center;
+}
+aside .user-thumbnail{
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+aside .user-name,
+aside .user-thumbnail{
+  display: inline-block;
+  vertical-align: middle;
+}
+aside .user-name .sub-title{
+  margin-bottom: 10px;
+}
+aside .top .left{
+  display: inline-block;
+}
+aside .top .right{
+  float: right;
+  height: 60px;
+}
+aside .top .date{
+  font-weight: 600;
+}
+#itinerary .step .main > *,
+#itinerary .sub-step > *{
+  display: inline-block;
+  vertical-align: middle;
+}
+#itinerary .step-details .sub-title:nth-child(3){
+  margin-top: 50px;
+}
+#itinerary .step-details{
+  margin-left: 10px;
+}
+#itinerary .sub-step{
+  font-size: 15px;
+}
+#itinerary .sub-step .step-details span:first-child{
+  margin-bottom: 18px;
+  display: block;
+  font-weight: 600;
+}
+#itinerary .sub-step .step-details span:last-child{
+  color: #9B9B9B;
+}
+#itinerary .sub-step{
+  padding-left: 40px;
+  margin-top: 40px;
+  box-sizing: border-box;
+  width:50%;
+  float: left;
+  position: relative;
+}
+#itinerary .step{
+  margin-bottom: 40px;
+  padding-left: 40px;
+  position: relative;
+}
+#itinerary .step .main:before{
+  content: '';
+  display: block;
+  background-color: #7ED321;
+  height: 18px;
+  width: 18px;
+  position: absolute;
+  border-radius: 50%;
+  left: 2px;
+  top: 74px;
+  transform: translateY(-50%);
+  transition: all ease 0.5s;
+  border: solid 2px #fff;
+}
+#itinerary .step.active .main:before{
+  left: 1px;
+  height: 20px;
+  width: 20px;
+  box-shadow: inset 0 0 0 2px #fff;
+  border: solid 2px #7ED321;
+  z-index: 20;
+}
+#itinerary .step:not(:last-child) .main:after,
+#itinerary .step:not(:last-child) .sub-step:nth-child(2n+1):after{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 12px;
+  width: 2px;
+  height: 195px;
+  background-color: #7ED321;
+  top:74px;
+  z-index: 10;
+}
+#itinerary .step:not(:last-child) .sub-step:nth-child(2n+1):after{
+  left: -28px;
+  top: 80px;
+  height:130px;
+}
+.advert .with-aside.inside.wrapper > div:not(:first-child){
+  border-bottom: solid 1px #D9D9D9;
+  padding-top: 1px;
+}
+#presentation p{
+  color: #4b4b4b;
+}
+aside a.btn-green {
+  width: 100%;
+  box-sizing: border-box;
+}
+#budget-estimation .inside{
+  margin: 40px 0;
+}
+#budget-estimation table{
+  width: 50%;
+  float: left;
+  font-size: 18px;
+  margin-bottom: 50px;
+}
+#budget-estimation table.active-data{
+  width: calc(50% - 20px);
+  font-size: 16px;
+  float: right;
+}
+#budget-estimation table td:not(:last-child),
+#budget-estimation table td:last-child div{
+  padding: 12px 5px;
+}
+#budget-estimation table td:last-child{
+  text-align: right;
+}
+#budget-estimation table td{
+  padding: 0;
+}
+#budget-estimation table td div{
+  position: relative;
+}
+#budget-estimation table tr.active td:last-child div:after{
+  position: absolute;
+  content: '';
+  left: 99.99%;
+  height: 100%;
+  width: 10px;
+  top: 0;
+  background-image: url('../images/triangle-table.svg');
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+#budget-estimation .value div,
+#budget-estimation .value{
+  font-family: 'Helvetica Neue';
+  color: #9B9B9B;
+}
+#budget-estimation .active .value div{
+  color: #fff;
+}
+#budget-estimation table:first-child tr{
+  border-bottom: solid 1px #D9D9D9;
+}
+#budget-estimation table .icon{
+  text-align: center;
+}
+#budget-estimation table tr:not(.active) .icon i{
+  color: #7ED321;
+}
+#budget-estimation h2{
+  display: inline-block;
+}
+#budget-estimation > .total{
+  font-size: 24px;
+  float: right;
+  border-bottom: solid 1px #D9D9D9;
+  margin-top: 27px;
+}
+#budget-estimation > .total .value{
+  font-weight: 500;
+  color: #4A4A4A;
+  padding-left: 10px;
+}
+#budget-estimation .message{
+  text-align: center;
+  font-size: 14px;
+  color: #9B9B9B;
+  padding: 0 8%;
+}
+#discussions .actions span,
+#discussions .actions span i{
+  color: #D9D9D9;
+  cursor: pointer;
+  font-size: 14px;
+}
+#discussions .thumbs i,
+#discussions .actions span,
+#discussions .actions span i{
+  transition: color 0.1s ease;
+}
+#discussions .actions span i{
+  padding-right: 5px;
+}
+#discussions .actions span{
+  padding-right: 15px;
+}
+#discussions .actions span:hover,
+#discussions .actions span:hover i{
+  color: #4A4A4A;
+}
+#discussions{
+  padding-bottom: 40px;
+}
+#discussions .thumbs.liked i{
+  color: #72BF1F;
+}
+#discussions .thumbs{
+  float: right;
+  cursor: pointer;
+  margin-top: 5px;
+}
+#discussions .thumbs:hover i{
+  color: #72BF1F;
+}
+#discussions .author{
+  float: left;
+}
+#discussions .author > *{
+  display: inline-block;
+  vertical-align: middle;
+}
+#discussions .author .sub-title{
+  margin-bottom: 0;
+}
+#discussions .message{
+  clear: both;
+  padding: 5px 0 3px 0;
+}
+#discussions .author .user-thumbnail{
+  margin-right: 5px;
+}
+#discussions .author .user-name span{
+  font-weight: 600;
+  font-size: 18px;
+}
+#discussions .author .timestamp{
+  font-size: 14px;
+  margin-top: 5px;
+}
+#discussions .user-thumbnail{
+  width:48px;
+  height:48px;
+}
+#discussions .comment{
+  margin: 40px 0;
+}

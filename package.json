@@ -1,0 +1,42 @@
+{
+  "name": "simple_trips",
+  "version": "1.0.0",
+  "description": "Simple Trips is a Social network to link people who likes travelling",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulantoine2/simple-trips.git"
+  },
+  "keywords": [
+    "trips"
+  ],
+  "author": "Paul Antoine",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paulantoine2/simple-trips/issues"
+  },
+  "homepage": "https://github.com/paulantoine2/simple-trips#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "NODE_ENV=production node_modules/.bin/webpack -p",
+    "run": "NODE_ENV=production node_modules/.bin/babel-node --presets react,es2015 src/server.js"
+  },
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "normalize.css": "^6.0.0",
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.13.2",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
+    "ejs": "^2.5.6",
+    "express": "^4.14.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-router": "^2.6.1"
+  },
+  "devDependencies": {
+    "babel-loader": "^6.2.10",
+    "http-server": "^0.9.0",
+    "webpack": "^1.13.3"
+  }
+}
