@@ -1,15 +1,15 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 import Layout from './components/Layout';
-import IndexPage from './components/IndexPage';
-import AthletePage from './components/AthletePage';
-import NotFoundPage from './components/NotFoundPage';
+import Home from './components/Home';
+import AdvertPage from "./components/Advert/AdvertPage";
 
 const routes = (
   <Route path="/" component={Layout}>
-    <IndexRoute component={IndexPage}/>
-    <Route path="athlete/:id" component={AthletePage}/>
-    <Route path="*" component={NotFoundPage}/>
+    <IndexRoute component={Home}/>
+    <Route path="advert">
+      <IndexRoute component={AdvertPage}/>
+    </Route>
   </Route>
 );
 
