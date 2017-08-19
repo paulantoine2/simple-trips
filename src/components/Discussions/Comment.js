@@ -54,7 +54,7 @@ class Comment extends React.Component{
     let { comment, showModal } = this.props;
 
     const thumbs_classes = classNames('thumbs', { 'liked' : this.state.liked_by_user }, { 'active' : this.state.likes > 0});
-    const time_ago = moment(comment.date, 'YYYY-MM-DD').fromNow();
+    const time_ago = moment(comment.createdAt, 'YYYY-MM-DD').fromNow();
 
     return (
       <div className="comment">

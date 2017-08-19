@@ -1,0 +1,33 @@
+# project: cj6drg2lw3e470101jbw2veh0
+# version: 2
+
+type User implements Node {
+  username: String!
+  avatar: String!
+  comments: [Comment!]! @relation(name: "CommentAuthor")
+  createdAt: DateTime!
+  id: ID! @isUnique
+  updatedAt: DateTime!
+}
+
+type Comment implements Node {
+  author: User! @relation(name: "CommentAuthor")
+  message: String!
+  replies: [Comment!]! @relation(name: "CommentReply")
+  parent: Comment @relation(name: "CommentReply")
+  likes: Int!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  updatedAt: DateTime!
+}
+
+type File implements Node {
+  contentType: String!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  name: String!
+  secret: String! @isUnique
+  size: Int!
+  updatedAt: DateTime!
+  url: String! @isUnique
+}

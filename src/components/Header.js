@@ -3,12 +3,14 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showModal } from '../actions/index';
+import {GC_USER_ID, GC_AUTH_TOKEN} from '../constants';
 
-const login = false;
+
 
 class Header extends React.Component {
 
   render() {
+    const userId = localStorage.getItem(GC_USER_ID);
     let nav = (
       <div className="left">
         <div className="branding">
@@ -41,7 +43,7 @@ class Header extends React.Component {
       </div>
     );
     let userMenu;
-    if(login) {
+    if(userId) {
       userMenu = (
         <div className="right">
           <div className="user-account">
@@ -58,6 +60,13 @@ class Header extends React.Component {
           </div>
           <div className="create-your-trip">
             <a href="/">Create your trip</a>
+          </div>
+          <div>
+            <div onClick={() => {
+              localStorage.removeItem(GC_USER_ID);
+              localStorage.removeItem(GC_AUTH_TOKEN);
+              window.location.reload();
+            }}>Logout</div>
           </div>
           {settings}
         </div>
