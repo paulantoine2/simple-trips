@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { bindActionCreators } from 'redux';
-import { addComment, replyToComment } from '../../actions/index';
+import { gql, compose, graphql } from 'react-apollo';
+import {GC_USER_ID} from "../../constants";
 
 class CommentBox extends React.Component{
 
@@ -28,14 +27,29 @@ class CommentBox extends React.Component{
     this.setState({content: event.target.value});
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     this.setState({content: ''});
     if(this.props.reply){
-      this.props.replyToComment(this.props.id, this.state.content);
+      const newComment = await this.props.addComment({
+        variables: {
+          message: this.state.content,
+          author: localStorage.getItem(GC_USER_ID),
+        }});
+      await this.props.replyToComment({
+        variables: {
+          parent: this.props.id,
+          reply: newComment.data.createComment.id
+        }});
+      this.props.refetch();
       this.props.hideReplyBox();
     } else {
-      this.props.addComment(this.state.content);
+      await this.props.addComment({
+        variables: {
+          message: this.state.content,
+          author: localStorage.getItem(GC_USER_ID)
+        }});
+      this.props.refetch();
     }
   }
 
@@ -54,7 +68,6 @@ class CommentBox extends React.Component{
   }
 
   render() {
-    console.log(this.getTrueMessageLength());
     const placeholder = this.props.reply ? 'Write a reply...' : 'Join the discussion...';
     const btn_classes = classNames('btn', 'btn-green', { 'disabled' : this.getTrueMessageLength() < 2 });
     return (
@@ -71,8 +84,38 @@ class CommentBox extends React.Component{
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addComment, replyToComment }, dispatch)
-}
+const CREATE_COMMENT_MUTATION = gql`
+  mutation CreateCommentMutation($message: String!, $author: ID!) {
+      createComment(
+          message: $message,
+          likes: 0,
+          authorId: $author,
+      ) {
+          id
+          createdAt
+          message
+          author {
+              username
+              avatar
+          }
+      }
+  }
+`;
 
-export default connect(null, mapDispatchToProps)(CommentBox);
+const ADD_REPLY_TO_COMMENT_MUTATION = gql`
+  mutation AddReplyToCommentMutation($parent: ID!, $reply: ID!) {
+      addToCommentReply(
+          repliesCommentId: $reply,
+          parentCommentId: $parent
+      ) {
+          repliesComment{
+              id
+          }
+      }
+  }
+`;
+
+export default compose(
+  graphql(CREATE_COMMENT_MUTATION, { name: 'addComment' }),
+  graphql(ADD_REPLY_TO_COMMENT_MUTATION, { name: 'replyToComment' })
+)(CommentBox);

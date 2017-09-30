@@ -10,12 +10,15 @@ import {GC_USER_ID, GC_AUTH_TOKEN} from '../constants';
 class Header extends React.Component {
 
   render() {
-    const userId = localStorage.getItem(GC_USER_ID);
+    let userId = null;
+    if(typeof localStorage !== 'undefined'){
+      userId = localStorage.getItem(GC_USER_ID);
+    }
     let nav = (
       <div className="left">
         <div className="branding">
           <Link to="/">
-            <img src="images/logo.svg" alt=""/>
+            <img src="../static/images/logo.svg" alt=""/>
           </Link>
         </div>
         <div className="header-menu">

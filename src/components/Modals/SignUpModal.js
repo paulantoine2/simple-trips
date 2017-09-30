@@ -6,9 +6,12 @@ import SignUpForm from '../Form/SignUpForm';
 
 class SignUpModal extends React.Component {
 
-  state = {
-    form_active: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      form_active: false
+    };
+  }
 
   render() {
     return (

@@ -835,3 +835,29 @@ tr.active *{
   float: right;
   margin-top: 20px;
 }
+
+.advert > span > div {
+  transition: opacity 3000ms ease;
+}
+
+.modal-enter{
+  opacity: 0.01;
+  transform: scale(0.7);
+}
+.modal-enter.modal-enter-active{
+  opacity: 1;
+  transform: scale(1);
+}
+.modal-enter{
+  opacity: 0.01;
+}
+.modal-enter.modal-enter-active{
+  opacity: 1;
+}
+.modal-leave.modal-leave-active{
+  opacity: 0;
+  transform: scale(0.7);
+}
+.modal-leave.modal-leave-active{
+  opacity: 0;
+}

@@ -1,12 +1,15 @@
 # project: cj6drg2lw3e470101jbw2veh0
-# version: 2
+# version: 6
 
 type User implements Node {
   username: String!
   avatar: String!
   comments: [Comment!]! @relation(name: "CommentAuthor")
+  adverts: [Advert!]! @relation(name: "AdvertAuthor")
   createdAt: DateTime!
+  email: String @isUnique
   id: ID! @isUnique
+  password: String
   updatedAt: DateTime!
 }
 
@@ -15,6 +18,7 @@ type Comment implements Node {
   message: String!
   replies: [Comment!]! @relation(name: "CommentReply")
   parent: Comment @relation(name: "CommentReply")
+  appearsInAdvert: Advert @relation(name: "AdvertComment")
   likes: Int!
   createdAt: DateTime!
   id: ID! @isUnique
@@ -30,4 +34,45 @@ type File implements Node {
   size: Int!
   updatedAt: DateTime!
   url: String! @isUnique
+}
+
+type Advert implements Node {
+  title: String!
+  views: Int!
+  landingImage: String!
+  peopleTotal: Int!
+  peopleActive: Int!
+  presentation: String!
+  author: User! @relation(name: "AdvertAuthor")
+  comments: [Comment!]! @relation(name: "AdvertComment")
+  budget: Budget @relation(name: "AdvertBudget")
+  id: ID! @isUnique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Budget implements Node {
+  id: ID! @isUnique
+  advert: Advert! @relation(name: "AdvertBudget")
+  total: Float!
+  baseCurrency: Currency!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum Currency {
+  AUD
+  EUR
+  USD
+  GBP
+  INR
+  NZD
+  CAD
+  SGD
+  CHF
+  MYR
+  JPY
+  CNY
+  IDR
+  THB
 }

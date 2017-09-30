@@ -7,7 +7,7 @@ import AdvertPage from "./components/Advert/AdvertPage";
 const routes = (
   <Route path="/" component={Layout}>
     <IndexRoute component={Home}/>
-    <Route path="advert">
+    <Route path="advert/:advertId">
       <IndexRoute component={AdvertPage}/>
     </Route>
   </Route>

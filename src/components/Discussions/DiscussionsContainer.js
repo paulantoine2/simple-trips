@@ -21,22 +21,23 @@ class DiscussionsContainer extends React.Component{
       <div id="discussions">
         <h2 className="small">Discussions</h2>
         <div className="inside">
-          {comments.map((comment, index) => <Comment key={index} comment={comment}/>)}
+          {comments.map((comment, index) => <Comment key={index} comment={comment} refetch={this.props.allCommentsQuery.refetch}/>)}
         </div>
-        <CommentBox/>
+        <CommentBox refetch={this.props.allCommentsQuery.refetch}/>
       </div>
     );
   }
 }
 
 
-const ALL_LINKS_QUERY = gql`query AllCommentsQuery($parent: CommentFilter) {
-        allComments(filter: { parent: $parent }) {
+const ALL_LINKS_QUERY = gql`
+    query AllCommentsQuery($parent: CommentFilter, $advertId: AdvertFilter) {
+        allComments(filter: { parent: $parent, appearsInAdvert: $advertId }) {
             id
             likes
             author {
                 username
-                avatar
+                avatar 
             }
             createdAt
             message
@@ -55,4 +56,14 @@ const ALL_LINKS_QUERY = gql`query AllCommentsQuery($parent: CommentFilter) {
 `;
 
 
-export default graphql(ALL_LINKS_QUERY, { name: 'allCommentsQuery', options: { variables: { parent: null}} }) (DiscussionsContainer);
+export default graphql(ALL_LINKS_QUERY, {
+  name: 'allCommentsQuery',
+  options: ({ contentId }) => ({
+    variables: {
+      parent: null,
+      advertId: {
+        id: contentId
+      }
+    },
+  }),
+}) (DiscussionsContainer);

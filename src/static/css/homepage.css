@@ -2,14 +2,16 @@
 
 #landing-top{
   height:750px;
-  background: url('../images/landing.jpg') no-repeat 50% 50%;
+  background-color: #f4f4f4;
+  /*background: url('../images/landing.jpg') no-repeat 50% 50%;*/
   -webkit-background-size: cover;
   background-size: cover;
   position: relative;
+  transition: background-image 1s ease;
 }
-.advert #landing-top{
-  background-image: url('../images/landingcoast.jpg');
-}
+/*.advert #landing-top{*/
+  /*background-image: url('../images/landingcoast.jpg');*/
+/*}*/
 #landing-top:after{
   content: '';
   position: absolute;

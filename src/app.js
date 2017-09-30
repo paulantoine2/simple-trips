@@ -1,56 +1,70 @@
+import React from 'react';
 import path from 'path';
 import { Server } from 'http';
-import Express from 'express';
-import React from 'react';
+import ReactDOM from 'react-dom/server';
 import { renderToString } from 'react-dom/server';
+import { createStore } from 'redux';
+import { rootReducer } from './reducers/index';
+import { ApolloProvider, ApolloClient, renderToStringWithData } from 'react-apollo';
+import Express from 'express';
 import { match, RouterContext } from 'react-router';
-import routes from './routes';
+import networkInterface from './helpers/create-apollo-client';
 import NotFoundPage from './components/NotFoundPage';
-
-// initialize the server and configure support for ejs templates
+import Html from './Html';
+// A Routes file is a good shared entry-point between client and server
+import routes from './routes';
+// Note you don't have to use any particular http server, but
+// we're using Express in this example
 const app = new Express();
 const server = new Server(app);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // define the folder that will be used for static assets
-app.use(Express.static(path.join(__dirname, 'static')));
+app.use(Express.static(path.join(__dirname, 'public')));
 
-app.get('/json', (req, res) => {
-  res.json('hello');
-});
+app.use((req, res) => {
+  // This example uses React Router, although it should work equally well with other
+  // routers that support SSR
+  match({ routes, location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+    // in case of error display the error message
+    if (error) {
+      return res.status(500).send(error.message);
+    }
 
-// universal routing and rendering
-app.get('*', (req, res) => {
-  match(
-    { routes, location: req.url },
-(err, redirectLocation, renderProps) => {
+    // in case of redirect propagate the redirect to the browser
+    if (redirectLocation) {
+      return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+    }
 
-  // in case of error display the error message
-  if (err) {
-    return res.status(500).send(err.message);
-  }
+    if (renderProps) {
+      // if the current route matched we have renderProps
+      const client = new ApolloClient({
+        ssrMode: true,
+        networkInterface
+      });
+      const store = createStore(rootReducer);
+      const app = (
+        <ApolloProvider store={store} client={client}>
+          <RouterContext {...renderProps} />
+        </ApolloProvider>
+      );
+      renderToStringWithData(app).then((content) => {
+        const initialState = {[client.reduxRootKey]: client.getInitialState() };
+        const html = <Html content={content} state={initialState} />;
+        res.status(200);
+        res.send(`<!doctype html>\n${ReactDOM.renderToStaticMarkup(html)}`);
+        res.end();
+      });
+    } else {
+      // otherwise we can render a 404 page
+      let markup = renderToString(<NotFoundPage/>);
+      res.status(404);
+      return res.render('index', { markup });
+    }
 
-  // in case of redirect propagate the redirect to the browser
-  if (redirectLocation) {
-    return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-  }
 
-  // generate the React markup for the current route
-  let markup;
-  if (renderProps) {
-    // if the current route matched we have renderProps
-    markup = renderToString(<RouterContext {...renderProps}/>);
-  } else {
-    // otherwise we can render a 404 page
-    markup = renderToString(<NotFoundPage/>);
-    res.status(404);
-  }
-
-  // render the index template with the embedded React markup
-  return res.render('index', { markup });
-}
-);
+  });
 });
 
 // start the server

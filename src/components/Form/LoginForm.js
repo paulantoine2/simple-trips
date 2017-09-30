@@ -4,10 +4,13 @@ import { GC_USER_ID, GC_AUTH_TOKEN } from '../../constants'
 
 class Login extends React.Component {
 
-  state = {
-    email: '',
-    password: ''
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      email: '',
+      password: ''
+    };
+  }
 
   render() {
     return (
@@ -39,7 +42,7 @@ class Login extends React.Component {
     )
   }
 
-  submitHandler = async () => {
+  async submitHandler() {
     const { email, password } = this.state;
     const result = await this.props.login({
       variables: {
@@ -53,7 +56,7 @@ class Login extends React.Component {
     window.location.reload();
   };
 
-  saveUserData = (id, token) => {
+  saveUserData(id, token) {
     localStorage.setItem(GC_USER_ID, id);
     localStorage.setItem(GC_AUTH_TOKEN, token);
   }
